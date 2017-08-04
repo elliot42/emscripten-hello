@@ -14,14 +14,14 @@ const char* replacement_fetch_path = "/models/world.txt";
 
 // Print the contents of the file at `path` from the local virtual file system
 void print_path(const char* path) {
-	int bufferSz = 128;
-	char* buffer = (char*) malloc(sizeof(char) * bufferSz);
-	FILE* fp = fopen(path, "rb");
-	size_t retCode = fread(buffer, sizeof(char), bufferSz, fp);
-	fclose(fp);
+  int bufferSz = 128;
+  char* buffer = (char*) malloc(sizeof(char) * bufferSz);
+  FILE* fp = fopen(path, "rb");
+  size_t retCode = fread(buffer, sizeof(char), bufferSz, fp);
+  fclose(fp);
 
-	printf("%s\n", buffer);
-	free(buffer);
+  printf("%s\n", buffer);
+  free(buffer);
 }
 
 // Callback for when the Emscripten fetch succceeds;
@@ -50,7 +50,7 @@ void download_failed(emscripten_fetch_t* fetch) {
 
 //
 int main(int argc, char** argv) {
-	emscripten_fetch_attr_t attr;
+  emscripten_fetch_attr_t attr;
   emscripten_fetch_attr_init(&attr);
   strcpy(attr.requestMethod, "GET");
   attr.attributes = EMSCRIPTEN_FETCH_LOAD_TO_MEMORY;
