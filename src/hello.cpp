@@ -28,10 +28,15 @@ void print_path(const char* path) {
 // Overwrites `default_load_path` with the data from the Emscripten fetch.
 void download_succeeded(emscripten_fetch_t* fetch) {
   printf("Finished downloading %llu bytes from URL %s.\n", fetch->numBytes, fetch->url);
-	FILE* fp = fopen(default_load_path, "wb");
-	size_t retCode = fwrite(fetch->data, 1, fetch->numBytes, fp);
-	fclose(fp);
+
+  // replace contents of file in virtual file system with what we loaded;
+  // alternatively, one might be able to just use the data in memory
+  // without "hitting disk"
+  FILE* fp = fopen(default_load_path, "wb");
+  size_t retCode = fwrite(fetch->data, 1, fetch->numBytes, fp);
+  fclose(fp);
   emscripten_fetch_close(fetch); // Free data associated with the fetch.
+
   print_path(default_load_path);
 }
 
@@ -52,6 +57,9 @@ int main(int argc, char** argv) {
   attr.onsuccess = download_succeeded;
   attr.onerror = download_failed;
   emscripten_fetch(&attr, replacement_fetch_path);
+
+  // TODO: the above line is actually async and will return immediately
+  // so this code would really need to wait until the above completes.
 
   return 0;
 }
