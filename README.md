@@ -30,6 +30,9 @@ This demonstrates both default local file pre-loading, and dynamic fetching.
 
 ## Compiling and Running
 
+(First you need Emscripten setup, e.g.
+[http://kripken.github.io/emscripten-site/docs/getting_started/downloads.html](http://kripken.github.io/emscripten-site/docs/getting_started/downloads.html))
+
 The following command will compile and run the entire package
 (with standalone `emrun` web server)
 
